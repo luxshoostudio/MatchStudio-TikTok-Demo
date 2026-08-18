@@ -32,6 +32,7 @@ input::placeholder,textarea::placeholder{color:#5c5c52}
   <div>
     <div style="font-weight:700;font-size:40px;line-height:1.05;color:#f5f5ee">Tell us<br/>about you.</div>
     <button onClick="{{goOnboarding}}" style="margin-top:28px;width:100%;padding:16px;background:{{accent}};color:#0a0a08;border:none;border-radius:14px;font-weight:600;font-size:16px;cursor:pointer;font-family:Geist,sans-serif">Build my brief →</button>
+    <div onClick="{{skipToFeed}}" style="margin-top:14px;text-align:center;font-size:13px;color:#8f8f84;cursor:pointer;text-decoration:underline">Skip — go straight to capabilities</div>
   </div>
 </div>
 </sc-if>
@@ -109,10 +110,11 @@ input::placeholder,textarea::placeholder{color:#5c5c52}
       </div>
     </sc-if>
   </div>
-  <div style="display:flex;align-items:center;justify-content:center;gap:22px;padding:20px 20px 26px">
-    <div onClick="{{onPass}}" style="width:56px;height:56px;border-radius:50%;background:#161611;display:flex;align-items:center;justify-content:center;font-size:22px;cursor:pointer;border:1px solid rgba(255,255,255,.08)">❌</div>
-    <div onClick="{{onOpenComment}}" style="width:46px;height:46px;border-radius:50%;background:#161611;display:flex;align-items:center;justify-content:center;font-size:18px;cursor:pointer;border:1px solid rgba(255,255,255,.08)">💬</div>
-    <div onClick="{{onLike}}" style="width:56px;height:56px;border-radius:50%;background:{{accent}};display:flex;align-items:center;justify-content:center;font-size:22px;cursor:pointer">❤️</div>
+  <div style="text-align:center;font-family:'Geist Mono',monospace;font-size:10px;letter-spacing:.06em;color:#5c5c52;text-transform:uppercase;padding-top:10px">‹ swipe to pass · swipe to save ›</div>
+  <div style="display:flex;align-items:center;justify-content:center;gap:16px;padding:10px 20px 24px">
+    <div onClick="{{onPass}}" style="width:40px;height:40px;border-radius:50%;background:transparent;display:flex;align-items:center;justify-content:center;font-size:16px;cursor:pointer;border:1px solid rgba(255,255,255,.12);opacity:.7">❌</div>
+    <div onClick="{{onOpenComment}}" style="width:34px;height:34px;border-radius:50%;background:transparent;display:flex;align-items:center;justify-content:center;font-size:13px;cursor:pointer;border:1px solid rgba(255,255,255,.12);opacity:.7">💬</div>
+    <div onClick="{{onLike}}" style="width:40px;height:40px;border-radius:50%;background:transparent;display:flex;align-items:center;justify-content:center;font-size:16px;cursor:pointer;border:1px solid rgba(255,255,255,.12);opacity:.7">❤️</div>
   </div>
 </div>
 </sc-if>
