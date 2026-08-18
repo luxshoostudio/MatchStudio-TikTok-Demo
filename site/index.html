@@ -1,0 +1,1020 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#050505">
+  <title>Match Studio / Brand Brief</title>
+  <style>
+    :root {
+      --accent: #e7ff2e;
+      --accent-rgb: 231, 255, 46;
+      --ink: #f5f5ef;
+      --muted: #90918a;
+      --line: rgba(255, 255, 255, .14);
+      --panel: #12130f;
+      --panel-2: #1c1d17;
+      --danger: #ff6b64;
+      --phone-width: min(410px, 94vw);
+      --phone-height: min(850px, 92dvh);
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body { min-height: 100%; }
+
+    body {
+      margin: 0;
+      min-height: 100dvh;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 50% 0%, rgba(var(--accent-rgb), .08), transparent 34rem),
+        #030303;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      letter-spacing: -.01em;
+    }
+
+    button, input, textarea { font: inherit; }
+
+    button { cursor: pointer; }
+
+    .page {
+      min-height: 100dvh;
+      display: grid;
+      place-items: center;
+      padding: 4vh 20px;
+    }
+
+    .phone {
+      position: relative;
+      width: var(--phone-width);
+      height: var(--phone-height);
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, .17);
+      border-radius: 42px;
+      background: #080908;
+      box-shadow: 0 30px 100px rgba(0, 0, 0, .65), 0 0 0 8px rgba(255, 255, 255, .025);
+      isolation: isolate;
+    }
+
+    .phone::before {
+      content: "";
+      position: absolute;
+      z-index: 10;
+      left: 50%;
+      top: 10px;
+      width: 105px;
+      height: 24px;
+      transform: translateX(-50%);
+      border-radius: 16px;
+      background: #000;
+      opacity: .95;
+      pointer-events: none;
+    }
+
+    #app { height: 100%; }
+
+    .screen {
+      position: relative;
+      height: 100%;
+      overflow: hidden;
+      background: linear-gradient(180deg, #080908, #0c0d0b 70%, #11120e);
+    }
+
+    .screen.scrollable { overflow-y: auto; }
+
+    .screen.scrollable::-webkit-scrollbar { width: 0; }
+
+    .screen-content {
+      min-height: 100%;
+      padding: 54px 22px 28px;
+    }
+
+    .screen-content.tight { padding-top: 44px; }
+
+    .topline {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      color: var(--muted);
+      font-size: 10px;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+    }
+
+    .brand-mark {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--ink);
+      font-size: 12px;
+      font-weight: 750;
+      letter-spacing: .02em;
+      text-transform: none;
+    }
+
+    .mark-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 4px 0 0 rgba(255, 72, 72, .7), -4px 0 0 rgba(43, 220, 255, .55);
+    }
+
+    .home-button {
+      position: absolute;
+      z-index: 5;
+      top: 43px;
+      right: 20px;
+      width: 31px;
+      height: 31px;
+      border: 1px solid var(--line);
+      border-radius: 50%;
+      color: var(--muted);
+      background: rgba(0, 0, 0, .26);
+      font-size: 15px;
+    }
+
+    .home-button:hover { color: var(--ink); border-color: rgba(255,255,255,.38); }
+
+    .intro {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: 100%;
+      padding: 80px 26px 30px;
+    }
+
+    .intro-hero { max-width: 330px; }
+
+    .intro-kicker {
+      margin-bottom: 30px;
+      color: var(--accent);
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+    }
+
+    .intro h1 {
+      max-width: 310px;
+      margin: 0 0 22px;
+      font-size: clamp(34px, 9vw, 46px);
+      line-height: .98;
+      letter-spacing: -.065em;
+    }
+
+    .intro h1 span { color: var(--accent); }
+
+    .intro p {
+      max-width: 305px;
+      margin: 0;
+      color: #b9bab2;
+      font-size: 15px;
+      line-height: 1.55;
+    }
+
+    .intro-foot {
+      display: grid;
+      gap: 16px;
+    }
+
+    .intro-note {
+      display: flex;
+      justify-content: space-between;
+      gap: 18px;
+      color: var(--muted);
+      font-size: 11px;
+      line-height: 1.4;
+    }
+
+    .intro-note strong { color: var(--ink); font-weight: 600; }
+
+    .primary-button,
+    .secondary-button,
+    .text-button {
+      border: 0;
+      transition: transform .18s ease, background .18s ease, border-color .18s ease, color .18s ease;
+    }
+
+    .primary-button {
+      min-height: 52px;
+      padding: 0 18px;
+      border-radius: 18px;
+      color: #0a0b08;
+      background: var(--accent);
+      font-weight: 800;
+      text-align: left;
+    }
+
+    .primary-button:hover { transform: translateY(-2px); filter: brightness(1.05); }
+
+    .primary-button:disabled { opacity: .35; cursor: not-allowed; transform: none; }
+
+    .secondary-button {
+      min-height: 48px;
+      padding: 0 16px;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      color: var(--ink);
+      background: rgba(255,255,255,.04);
+      font-weight: 650;
+    }
+
+    .secondary-button:hover { border-color: rgba(255,255,255,.38); background: rgba(255,255,255,.08); }
+
+    .text-button {
+      padding: 4px 0;
+      color: var(--muted);
+      background: transparent;
+      font-size: 12px;
+    }
+
+    .text-button:hover { color: var(--ink); }
+
+    .back-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 28px;
+    }
+
+    .back-button {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 0;
+      border: 0;
+      color: var(--muted);
+      background: transparent;
+      font-size: 12px;
+    }
+
+    .back-button:hover { color: var(--ink); }
+
+    .progress-label {
+      color: var(--accent);
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+    }
+
+    .progress-track {
+      height: 3px;
+      margin-bottom: 36px;
+      overflow: hidden;
+      border-radius: 9px;
+      background: rgba(255,255,255,.1);
+    }
+
+    .progress-track span {
+      display: block;
+      height: 100%;
+      border-radius: inherit;
+      background: var(--accent);
+      transition: width .25s ease;
+    }
+
+    .question-kicker {
+      margin-bottom: 12px;
+      color: var(--muted);
+      font-size: 11px;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+    }
+
+    .question-title {
+      max-width: 320px;
+      margin: 0 0 28px;
+      font-size: 30px;
+      line-height: 1.04;
+      letter-spacing: -.055em;
+    }
+
+    .option-list { display: grid; gap: 10px; }
+
+    .option-button {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      min-height: 54px;
+      padding: 0 16px;
+      border: 1px solid var(--line);
+      border-radius: 17px;
+      color: var(--ink);
+      background: rgba(255,255,255,.025);
+      text-align: left;
+    }
+
+    .option-button:hover,
+    .option-button.selected {
+      border-color: var(--accent);
+      background: rgba(var(--accent-rgb), .09);
+    }
+
+    .option-button.selected::after {
+      content: "✓";
+      color: var(--accent);
+      font-weight: 800;
+    }
+
+    .onboarding-foot {
+      display: grid;
+      gap: 14px;
+      margin-top: 34px;
+    }
+
+    .feed-screen { background: #070806; }
+
+    .feed-head {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 14px;
+      margin: 21px 0 18px;
+    }
+
+    .feed-head h1 { margin: 0; font-size: 28px; letter-spacing: -.06em; }
+
+    .feed-head p { margin: 7px 0 0; color: var(--muted); font-size: 12px; line-height: 1.4; }
+
+    .feed-count { color: var(--accent); font-size: 11px; font-weight: 800; white-space: nowrap; }
+
+    .deck {
+      position: relative;
+      height: 510px;
+      margin: 0 -1px;
+    }
+
+    .proof-card {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,.18);
+      border-radius: 28px;
+      background: #171914;
+      box-shadow: 0 20px 38px rgba(0,0,0,.34);
+      touch-action: none;
+      user-select: none;
+      transition: transform .24s ease, opacity .24s ease;
+      will-change: transform;
+    }
+
+    .proof-card.next { transform: scale(.96) translateY(12px); opacity: .5; pointer-events: none; }
+
+    .proof-card.is-flying { transition: transform .28s ease, opacity .28s ease; }
+
+    .proof-image {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: .68;
+      filter: saturate(.88) contrast(1.05);
+    }
+
+    .proof-card::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(3,4,3,.04) 25%, rgba(3,4,3,.22) 42%, rgba(3,4,3,.98) 91%);
+    }
+
+    .proof-copy { position: relative; z-index: 1; padding: 22px; }
+
+    .proof-label {
+      display: inline-flex;
+      margin-bottom: 16px;
+      padding: 6px 9px;
+      border: 1px solid rgba(255,255,255,.21);
+      border-radius: 9px;
+      color: var(--accent);
+      background: rgba(4,5,4,.45);
+      font-size: 9px;
+      font-weight: 800;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+    }
+
+    .proof-card h2 { max-width: 285px; margin: 0 0 9px; font-size: 29px; line-height: .99; letter-spacing: -.06em; }
+
+    .proof-pitch { max-width: 292px; margin: 0 0 20px; color: #d7d8d0; font-size: 13px; line-height: 1.42; }
+
+    .proof-meta { display: grid; gap: 7px; padding-top: 14px; border-top: 1px solid rgba(255,255,255,.17); }
+
+    .proof-case { color: #fff; font-size: 12px; font-weight: 700; }
+
+    .proof-stat { color: var(--muted); font-size: 11px; }
+
+    .proof-detail-link {
+      display: inline-flex;
+      width: fit-content;
+      margin-top: 11px;
+      padding: 0;
+      border: 0;
+      color: var(--accent);
+      background: transparent;
+      font-size: 11px;
+      font-weight: 750;
+    }
+
+    .proof-detail-link:hover { color: #fff; }
+
+    .stamp {
+      position: absolute;
+      z-index: 3;
+      top: 62px;
+      padding: 8px 12px;
+      border: 3px solid currentColor;
+      border-radius: 9px;
+      font-size: 23px;
+      font-weight: 900;
+      letter-spacing: .04em;
+      opacity: 0;
+      transform: rotate(-12deg);
+    }
+
+    .stamp.like { left: 22px; color: var(--accent); }
+    .stamp.nope { right: 22px; color: var(--danger); transform: rotate(12deg); }
+
+    .proof-card.show-like .stamp.like,
+    .proof-card.show-nope .stamp.nope { opacity: .95; }
+
+    .feed-actions {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 14px;
+      margin-top: 16px;
+    }
+
+    .action-button {
+      display: grid;
+      place-items: center;
+      width: 51px;
+      height: 51px;
+      border: 1px solid var(--line);
+      border-radius: 50%;
+      color: var(--ink);
+      background: rgba(255,255,255,.04);
+      font-size: 20px;
+      transition: transform .16s ease, border-color .16s ease, background .16s ease;
+    }
+
+    .action-button:hover { transform: translateY(-3px); border-color: var(--accent); background: rgba(var(--accent-rgb), .12); }
+
+    .action-button.like { color: var(--accent); }
+    .action-button.comment { width: 42px; height: 42px; font-size: 16px; }
+    .feed-hint { margin: 13px 0 0; color: var(--muted); font-size: 10px; text-align: center; }
+
+    .shortlist-head { margin: 22px 0 28px; }
+    .shortlist-head h1 { margin: 0 0 10px; font-size: 34px; line-height: .98; letter-spacing: -.07em; }
+    .shortlist-head p { margin: 0; color: var(--muted); font-size: 13px; line-height: 1.5; }
+
+    .shortlist-list { display: grid; gap: 10px; margin-bottom: 22px; }
+
+    .shortlist-item {
+      padding: 15px;
+      border: 1px solid rgba(var(--accent-rgb), .28);
+      border-radius: 18px;
+      background: rgba(var(--accent-rgb), .055);
+    }
+
+    .shortlist-item-top { display: flex; align-items: start; justify-content: space-between; gap: 12px; }
+    .shortlist-item h3 { margin: 0 0 5px; font-size: 15px; letter-spacing: -.03em; }
+    .shortlist-item p { margin: 0; color: var(--muted); font-size: 11px; line-height: 1.4; }
+    .shortlist-like { color: var(--accent); font-size: 14px; }
+    .comment-preview { margin-top: 11px !important; color: #d5e69a !important; }
+
+    .empty-state {
+      padding: 35px 20px;
+      border: 1px dashed var(--line);
+      border-radius: 19px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.5;
+      text-align: center;
+    }
+
+    .shortlist-foot { display: grid; gap: 11px; margin-top: 20px; }
+    .shortlist-foot .secondary-button { text-align: left; }
+
+    .chat-screen { background: linear-gradient(180deg, #0b0c09, #10120d); }
+    .chat-head { margin: 22px 0 24px; }
+    .chat-head h1 { margin: 0 0 9px; font-size: 32px; letter-spacing: -.065em; }
+    .chat-head p { margin: 0; color: var(--muted); font-size: 12px; line-height: 1.5; }
+    .chat-list { display: grid; gap: 12px; margin-bottom: 16px; }
+    .chat-bubble { max-width: 86%; padding: 13px 14px; border-radius: 16px; font-size: 13px; line-height: 1.5; }
+    .chat-bubble.agent { justify-self: start; border: 1px solid var(--line); color: #d7d8d0; background: rgba(255,255,255,.045); border-bottom-left-radius: 5px; }
+    .chat-bubble.user { justify-self: end; color: #11120c; background: var(--accent); border-bottom-right-radius: 5px; }
+    .chat-form { display: flex; gap: 8px; margin-top: 14px; }
+    .chat-form input { min-width: 0; flex: 1; height: 48px; padding: 0 14px; border: 1px solid var(--line); border-radius: 15px; outline: none; color: var(--ink); background: rgba(255,255,255,.045); }
+    .chat-form input:focus { border-color: var(--accent); }
+    .chat-form button { width: 49px; border: 0; border-radius: 15px; color: #11120c; background: var(--accent); font-weight: 800; }
+    .chat-note { margin-top: 14px; color: var(--muted); font-size: 10px; line-height: 1.45; }
+
+    .done {
+      display: grid;
+      align-content: center;
+      min-height: 100%;
+      padding: 70px 27px 35px;
+    }
+
+    .done-check { display: grid; place-items: center; width: 66px; height: 66px; margin-bottom: 31px; border-radius: 50%; color: #10120b; background: var(--accent); font-size: 30px; font-weight: 900; }
+    .done h1 { max-width: 280px; margin: 0 0 16px; font-size: 43px; line-height: .94; letter-spacing: -.075em; }
+    .done p { max-width: 285px; margin: 0 0 34px; color: #bfc0b8; font-size: 14px; line-height: 1.6; }
+    .done small { display: block; margin-top: 15px; color: var(--muted); font-size: 10px; line-height: 1.45; }
+
+    .modal-backdrop { position: absolute; z-index: 20; inset: 0; display: grid; align-items: end; background: rgba(0,0,0,.63); }
+    .sheet { padding: 20px 20px 25px; border-top: 1px solid rgba(255,255,255,.17); border-radius: 24px 24px 0 0; background: #171914; box-shadow: 0 -20px 50px rgba(0,0,0,.36); }
+    .sheet-handle { width: 37px; height: 4px; margin: 0 auto 20px; border-radius: 8px; background: rgba(255,255,255,.25); }
+    .sheet h2 { margin: 0 0 7px; font-size: 23px; letter-spacing: -.05em; }
+    .sheet p { margin: 0 0 15px; color: var(--muted); font-size: 12px; line-height: 1.45; }
+    .sheet textarea { width: 100%; min-height: 92px; resize: vertical; padding: 12px; border: 1px solid var(--line); border-radius: 14px; outline: none; color: var(--ink); background: #0d0e0b; font-size: 13px; line-height: 1.45; }
+    .sheet textarea:focus { border-color: var(--accent); }
+    .sheet-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 9px; margin-top: 11px; }
+    .sheet-actions .primary-button, .sheet-actions .secondary-button { min-height: 45px; border-radius: 14px; font-size: 12px; }
+    .sheet-actions .primary-button { text-align: center; }
+
+    .detail-overlay { position: absolute; z-index: 18; inset: 0; overflow-y: auto; padding: 20px; background: #0a0b08; }
+    .detail-overlay::-webkit-scrollbar { width: 0; }
+    .detail-close { display: flex; justify-content: space-between; align-items: center; margin: 26px 0 16px; }
+    .detail-close button { border: 0; color: var(--muted); background: transparent; font-size: 20px; }
+    .detail-kicker { color: var(--accent); font-size: 10px; font-weight: 800; letter-spacing: .16em; text-transform: uppercase; }
+    .detail-overlay h2 { margin: 0 0 14px; font-size: 34px; line-height: .97; letter-spacing: -.07em; }
+    .detail-image { width: 100%; height: 190px; object-fit: cover; border-radius: 19px; opacity: .82; }
+    .detail-pitch { margin: 18px 0; color: #d7d8d0; font-size: 15px; line-height: 1.5; }
+    .detail-grid { display: grid; gap: 12px; margin-top: 18px; }
+    .detail-block { padding-top: 12px; border-top: 1px solid var(--line); }
+    .detail-block strong { display: block; margin-bottom: 5px; color: var(--muted); font-size: 9px; letter-spacing: .13em; text-transform: uppercase; }
+    .detail-block span { display: block; color: #e5e6df; font-size: 12px; line-height: 1.45; }
+
+    .reduced-motion *, .reduced-motion *::before, .reduced-motion *::after { animation-duration: .001ms !important; transition-duration: .001ms !important; scroll-behavior: auto !important; }
+
+    @media (max-width: 700px) {
+      .page { padding: 0; }
+      .phone { width: 100vw; height: 100dvh; border: 0; border-radius: 0; box-shadow: none; }
+      .phone::before { top: 7px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation-duration: .001ms !important; transition-duration: .001ms !important; scroll-behavior: auto !important; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <div class="phone" id="phone" aria-live="polite">
+      <div id="app"></div>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      "use strict";
+
+      const asset = (name) => "img/" + name;
+      const query = new URLSearchParams(window.location.search);
+      const brandKey = query.get("brand") === "huawei" ? "huawei" : "tiktok";
+
+      const configs = {
+        tiktok: {
+          key: "tiktok",
+          brand: "Match Studio",
+          client: "TikTok US",
+          accent: "#e7ff2e",
+          rgb: "231, 255, 46",
+          introKicker: "A brief-led production network",
+          introTitle: "Find the right\npeople for the\nnext story.",
+          introCopy: "A global content production and enterprise AI co-creation partner for Chinese brands going global.",
+          introNote: "Match Studio is the client-facing capability network. The people keep their names, craft and responsibility.",
+          questions: [
+            { id: "industry", label: "Your context", title: "What kind of work are you building?", options: ["E-commerce & Retail", "Consumer Tech", "Fashion & Beauty", "Auto", "Finance & Fintech", "F&B"] },
+            { id: "region", label: "Your market", title: "Where does this story need to travel?", options: ["North America", "Europe", "Southeast Asia", "Greater China", "Latin America"] },
+            { id: "content", label: "Your format", title: "What do you need to make?", options: ["Customer story", "Event coverage", "AI-versioned ads", "Livestream", "Documentary"] },
+            { id: "budget", label: "Your scale", title: "What production range are you exploring?", options: ["$10K-25K", "$25K-75K", "$75K-150K", "$150K+"] },
+            { id: "timeline", label: "Your timing", title: "When does this need to move?", options: ["This month", "This quarter", "Next quarter", "Just exploring"] },
+            { id: "team", label: "Your team", title: "Who will we be working with?", options: ["Solo / founder-led", "Small, 2-10", "Mid-size, 10-50", "Enterprise, 50+"] }
+          ],
+          cards: [
+            { id: "customer-story", label: "Capability 01", title: "Customer Story Kit", cn: "客户故事套件", pitch: "Turn a single install into a shareable, native-feeling story arc.", caseTitle: "DREAME · CES San Francisco Launch", stat: "Cross-market launch content, 3 cuts", img: asset("summit.jpg"), owner: "Field production + editorial", source: "Core-team service experience. Public level and exact attribution require review." },
+            { id: "event-system", label: "Capability 02", title: "Event to Content System", cn: "活动内容系统", pitch: "One shoot day, a week of native cutdowns.", caseTitle: "Global launch programme · Indonesia", stat: "Multi-market store-opening coverage", img: asset("ces.jpg"), owner: "Field production + versioning", source: "Core-team service experience. Final client-facing case wording requires review." },
+            { id: "ai-versioning", label: "Capability 03", title: "Story + AI Versioning", cn: "故事 + AI 多版本", pitch: "One hero film, resized and rewritten for every market.", caseTitle: "Intel · AI Hybrid Production", stat: "AI-assisted multi-market cutdowns", img: asset("aicollage.jpg"), owner: "Commercial production + AI hybrid", source: "Core-team service experience. AI workflow and usage rights require review." },
+            { id: "field-live", label: "Capability 04", title: "Field and Live Coverage", cn: "现场与直播", pitch: "Boots-on-ground crews across time zones, cut same-day.", caseTitle: "ESMO Berlin · Global Congress Coverage", stat: "Same-day multi-language cutdowns", img: asset("esmo.jpg"), owner: "Field production + live coordination", source: "Core-team service experience. Case evidence and public level require review." }
+          ]
+        },
+        huawei: {
+          key: "huawei",
+          brand: "KEKE Studio",
+          client: "Huawei",
+          accent: "#5ab0c4",
+          rgb: "90, 176, 196",
+          introKicker: "A documentary-led production partner",
+          introTitle: "Make the work\ntravel further\nthan the brief.",
+          introCopy: "A documentary and brand content studio for complex stories, global teams and real-world access.",
+          introNote: "KEKE Studio is the Huawei-facing brand entry. Match Studio remains the wider capability network code.",
+          questions: [
+            { id: "unit", label: "Your unit", title: "Which Huawei team are we meeting?", options: ["Huawei Cloud", "Enterprise", "Carrier", "Consumer / Devices", "Regional Marketing"] },
+            { id: "region", label: "Your market", title: "Where does this story need to travel?", options: ["Europe", "Southeast Asia", "Middle East", "Africa", "Global HQ"] },
+            { id: "content", label: "Your format", title: "What kind of story are you shaping?", options: ["Documentary series", "Brand story film", "Event / keynote", "Award and festival content"] },
+            { id: "budget", label: "Your scale", title: "What production range are you exploring?", options: ["¥100K-300K", "¥300K-1M", "¥1M-3M", "¥3M+"] },
+            { id: "timeline", label: "Your timing", title: "When does this need to move?", options: ["This month", "This quarter", "Next quarter", "Just exploring"] },
+            { id: "team", label: "Your team", title: "Who will we be working with?", options: ["Solo / founder-led", "Small, 2-10", "Mid-size, 10-50", "Enterprise, 50+"] }
+          ],
+          cards: [
+            { id: "global-doc", label: "Capability 01", title: "Global Documentary Production", cn: "全球纪录片制作", pitch: "Long-form, on-the-ground films built around real access.", caseTitle: "Exploring the Unknown · Tencent Video", stat: "Feature documentary production experience", img: asset("explore.jpg"), owner: "Documentary direction + field crew", source: "Core-team service experience. Rights, client relationship and public level require review." },
+            { id: "brand-film", label: "Capability 02", title: "Brand Story Film", cn: "品牌故事影片", pitch: "Ethnographic storytelling that carries a brand without selling it.", caseTitle: "My Cat From Hell · Discovery", stat: "International production and editorial experience", img: asset("cats.jpg"), owner: "Documentary storytelling + editorial", source: "Core-team service experience. Final attribution and use rights require review." },
+            { id: "field-narrative", label: "Capability 03", title: "Field and Festival Narrative", cn: "现场与影展叙事", pitch: "Content built to travel: field access, cultural detail and a clear point of view.", caseTitle: "China-Brazil Business Seminar", stat: "Cross-market field production experience", img: asset("brazil.jpg"), owner: "Field direction + international production", source: "Core-team service experience. Award or festival claims must not be added without verification." }
+          ]
+        }
+      };
+
+      const config = configs[brandKey];
+      const state = {
+        stage: "intro",
+        qIndex: 0,
+        answers: {},
+        cardIndex: 0,
+        decisions: {},
+        comments: {},
+        commentOpenFor: null,
+        commentDraft: "",
+        detailOpen: false,
+        detailCardId: null,
+        chatMessages: [],
+        chatStep: "brief",
+        chatPending: false,
+        reducedMotion: window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches
+      };
+
+      const app = document.getElementById("app");
+      const phone = document.getElementById("phone");
+      phone.style.setProperty("--accent", config.accent);
+      phone.style.setProperty("--accent-rgb", config.rgb);
+      if (state.reducedMotion) phone.classList.add("reduced-motion");
+
+      function esc(value) {
+        return String(value == null ? "" : value)
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;")
+          .replace(/\"/g, "&quot;")
+          .replace(/'/g, "&#039;");
+      }
+
+      function introBrand() {
+        return `<div class="brand-mark"><span class="mark-dot"></span><span>${esc(config.brand)}</span></div>`;
+      }
+
+      function homeButton() {
+        return state.stage === "intro" ? "" : `<button class="home-button" data-action="reset" aria-label="Return home">⌂</button>`;
+      }
+
+      function renderIntro() {
+        return `<section class="screen">
+          <div class="intro">
+            <div class="intro-hero">
+              <div class="topline"><span>${esc(config.client)} / private prototype</span><span>01</span></div>
+              <div class="intro-kicker">${esc(config.introKicker)}</div>
+              <h1>${esc(config.introTitle).replace(/\\n/g, "<br>")}</h1>
+              <p>${esc(config.introCopy)}</p>
+            </div>
+            <div class="intro-foot">
+              <div class="intro-note"><span>${esc(config.introNote)}</span><strong>6 questions</strong></div>
+              <button class="primary-button" data-action="start">Tell us about you <span>↗</span></button>
+              <button class="text-button" data-action="switch-brand">View ${brandKey === "tiktok" ? "Huawei / KEKE" : "TikTok / Match Studio"} mode</button>
+            </div>
+          </div>
+        </section>`;
+      }
+
+      function renderOnboarding() {
+        const question = config.questions[state.qIndex];
+        const selected = state.answers[question.id];
+        const progress = ((state.qIndex + 1) / config.questions.length) * 100;
+        return `<section class="screen scrollable">
+          ${homeButton()}
+          <div class="screen-content">
+            <div class="back-row"><button class="back-button" data-action="back">← Back</button><span class="progress-label">${state.qIndex + 1} / ${config.questions.length}</span></div>
+            <div class="progress-track"><span style="width:${progress}%"></span></div>
+            <div class="question-kicker">${esc(question.label)}</div>
+            <h1 class="question-title">${esc(question.title)}</h1>
+            <div class="option-list">
+              ${question.options.map(option => `<button class="option-button${selected === option ? " selected" : ""}" data-option="${esc(option)}">${esc(option)}</button>`).join("")}
+            </div>
+            <div class="onboarding-foot">
+              <button class="primary-button" data-action="next" ${selected ? "" : "disabled"}>${state.qIndex === config.questions.length - 1 ? "See your studio deck" : "Next question"} <span>→</span></button>
+              <div class="intro-note"><span>Brief answers stay in this prototype until a producer reviews them.</span><span>${esc(config.brand)}</span></div>
+            </div>
+          </div>
+        </section>`;
+      }
+
+      function renderProofCard(card, position) {
+        if (!card) return "";
+        const next = position === "next";
+        return `<article class="proof-card ${next ? "next" : "top-card"}" data-card-id="${esc(card.id)}" aria-label="${esc(card.title)}"${next ? "" : " tabindex=\"0\""}>
+          <img class="proof-image" src="${esc(card.img)}" alt="">
+          <span class="stamp like">LIKE</span><span class="stamp nope">NOPE</span>
+          <div class="proof-copy">
+            <div class="proof-label">${esc(card.label)} / ${esc(card.cn)}</div>
+            <h2>${esc(card.title)}</h2>
+            <p class="proof-pitch">${esc(card.pitch)}</p>
+            <div class="proof-meta"><span class="proof-case">${esc(card.caseTitle)}</span><span class="proof-stat">${esc(card.stat)}</span><button class="proof-detail-link" data-detail="${esc(card.id)}">View case details ↗</button></div>
+          </div>
+        </article>`;
+      }
+
+      function renderFeed() {
+        const card = config.cards[state.cardIndex];
+        const next = config.cards[state.cardIndex + 1];
+        const likedCount = Object.values(state.decisions).filter(value => value === "like").length;
+        return `<section class="screen feed-screen">
+          ${homeButton()}
+          <div class="screen-content tight">
+            <div class="topline">${introBrand()}<span>${likedCount} liked</span></div>
+            <div class="feed-head"><div><h1>Build your brief.</h1><p>Swipe through the capabilities.<br>Keep what feels relevant.</p></div><span class="feed-count">${state.cardIndex + 1} / ${config.cards.length}</span></div>
+            <div class="deck" id="deck">${renderProofCard(next, "next")}${renderProofCard(card, "top")}</div>
+            <div class="feed-actions"><button class="action-button" data-decision="nope" aria-label="Pass">👎</button><button class="action-button comment" data-action="open-comment" aria-label="Comment">💬</button><button class="action-button like" data-decision="like" aria-label="Like">❤️</button></div>
+            <p class="feed-hint">Drag left to pass · drag right to like · tap the card for details</p>
+          </div>
+        </section>`;
+      }
+
+      function likedCards() {
+        return config.cards.filter(card => state.decisions[card.id] === "like");
+      }
+
+      function renderShortlist() {
+        const liked = likedCards();
+        return `<section class="screen scrollable">
+          ${homeButton()}
+          <div class="screen-content">
+            <div class="topline">${introBrand()}<span>your shortlist</span></div>
+            <div class="shortlist-head"><h1>Your shortlist.</h1><p>${liked.length ? "These are the capabilities you kept. Add a note, then send the brief to a producer." : "No problem. A clear pass is useful signal too."}</p></div>
+            <div class="shortlist-list">${liked.length ? liked.map(card => `<article class="shortlist-item"><div class="shortlist-item-top"><div><h3>${esc(card.title)}</h3><p>${esc(card.caseTitle)}</p></div><span class="shortlist-like">♥</span></div>${state.comments[card.id] ? `<p class="comment-preview">“${esc(state.comments[card.id])}”</p>` : ""}</article>`).join("") : `<div class="empty-state">You did not keep a capability this time.<br>Send the brief anyway and a producer can start from your context.</div>`}</div>
+            <div class="shortlist-foot"><button class="primary-button" data-action="waitlist">Reserve your studio slot <span>→</span></button><button class="secondary-button" data-action="back-to-feed">Review the deck again</button></div>
+          </div>
+        </section>`;
+      }
+
+      function briefSummary() {
+        return config.questions.map(question => state.answers[question.id] ? `${question.label}: ${state.answers[question.id]}` : "").filter(Boolean).join(" · ");
+      }
+
+      function startWaitlist() {
+        state.stage = "waitlist";
+        state.chatStep = "brief";
+        state.chatPending = false;
+        state.chatMessages = [{ from: "agent", text: `You kept ${likedCards().length} ${likedCards().length === 1 ? "capability" : "capabilities"}. Tell us what you are trying to make next, and we will route it to the right producer.` }];
+        render();
+      }
+
+      function renderWaitlist() {
+        return `<section class="screen scrollable chat-screen">
+          ${homeButton()}
+          <div class="screen-content">
+            <div class="topline">${introBrand()}<span>human review queue</span></div>
+            <div class="chat-head"><h1>One last thing.</h1><p>A little context helps us make the next conversation useful.</p></div>
+            <div class="chat-list">${state.chatMessages.map(message => `<div class="chat-bubble ${message.from === "agent" ? "agent" : "user"}">${esc(message.text)}</div>`).join("")}${state.chatPending ? `<div class="chat-bubble agent">Thinking about the handoff...</div>` : ""}</div>
+            ${state.chatPending ? "" : `<form class="chat-form" data-chat-form><input name="message" autocomplete="off" placeholder="${state.chatStep === "brief" ? "A few words about the brief" : "Name and email"}" aria-label="Your message"><button type="submit" aria-label="Send">↑</button></form>`}
+            <p class="chat-note">This waiting list is a prototype of the intake flow. It does not send an email, create a CRM lead or make a delivery commitment.</p>
+            ${state.chatStep === "brief" && briefSummary() ? `<p class="chat-note">Captured context: ${esc(briefSummary())}</p>` : ""}
+          </div>
+        </section>`;
+      }
+
+      function renderDone() {
+        return `<section class="screen"><div class="done"><div class="done-check">✓</div><h1>You are on the list.</h1><p>Your brief is ready for a producer review. The next conversation should start with what you kept, not a generic capabilities deck.</p><button class="primary-button" data-action="reset">Start another brief <span>↗</span></button><small>Match Studio / ${esc(config.brand)} · prototype complete</small></div></section>`;
+      }
+
+      function renderCommentSheet() {
+        if (!state.commentOpenFor) return "";
+        const card = config.cards.find(item => item.id === state.commentOpenFor);
+        if (!card) return "";
+        return `<div class="modal-backdrop"><div class="sheet" role="dialog" aria-modal="true"><div class="sheet-handle"></div><h2>Say something about this.</h2><p>${esc(card.title)} · Optional context makes the shortlist more useful.</p><textarea data-comment-input placeholder="What caught your attention?">${esc(state.commentDraft)}</textarea><div class="sheet-actions"><button class="secondary-button" data-action="cancel-comment">Cancel</button><button class="primary-button" data-action="save-comment-like">Save and Like</button></div><button class="text-button" data-action="save-comment-pass">Save and Pass</button></div></div>`;
+      }
+
+      function renderDetail() {
+        if (!state.detailOpen) return "";
+        const card = config.cards.find(item => item.id === state.detailCardId);
+        if (!card) return "";
+        return `<div class="detail-overlay"><div class="detail-close"><span class="detail-kicker">Case detail</span><button data-action="close-detail" aria-label="Close">×</button></div><h2>${esc(card.title)}</h2><img class="detail-image" src="${esc(card.img)}" alt=""><p class="detail-pitch">${esc(card.pitch)}</p><div class="detail-grid"><div class="detail-block"><strong>Proof shown</strong><span>${esc(card.caseTitle)} · ${esc(card.stat)}</span></div><div class="detail-block"><strong>Capability owner</strong><span>${esc(card.owner)}</span></div><div class="detail-block"><strong>Evidence note</strong><span>${esc(card.source)}</span></div></div></div>`;
+      }
+
+      function render() {
+        let content = renderIntro();
+        if (state.stage === "onboarding") content = renderOnboarding();
+        if (state.stage === "feed") content = renderFeed();
+        if (state.stage === "shortlist") content = renderShortlist();
+        if (state.stage === "waitlist") content = renderWaitlist();
+        if (state.stage === "done") content = renderDone();
+        app.innerHTML = content + renderCommentSheet() + renderDetail();
+        bindFeedPointer();
+        const chatInput = app.querySelector("[name=message]");
+        if (chatInput) chatInput.focus();
+      }
+
+      function reset() {
+        state.stage = "intro";
+        state.qIndex = 0;
+        state.answers = {};
+        state.cardIndex = 0;
+        state.decisions = {};
+        state.comments = {};
+        state.commentOpenFor = null;
+        state.commentDraft = "";
+        state.detailOpen = false;
+        state.detailCardId = null;
+        state.chatMessages = [];
+        state.chatStep = "brief";
+        state.chatPending = false;
+        render();
+      }
+
+      function commitDecision(decision) {
+        if (state.stage !== "feed" || state.flying) return;
+        const card = config.cards[state.cardIndex];
+        if (!card) return;
+        state.flying = true;
+        state.flyDir = decision;
+        const top = app.querySelector(".top-card");
+        if (top) {
+          top.classList.add("is-flying", decision === "like" ? "show-like" : "show-nope");
+          top.style.transform = `translate(${decision === "like" ? "125%" : "-125%"}, -8%) rotate(${decision === "like" ? "14deg" : "-14deg"})`;
+          top.style.opacity = "0";
+        }
+        window.setTimeout(() => {
+          state.decisions[card.id] = decision;
+          state.cardIndex += 1;
+          state.flying = false;
+          state.flyDir = null;
+          if (state.cardIndex >= config.cards.length) state.stage = "shortlist";
+          render();
+        }, state.reducedMotion ? 1 : 280);
+      }
+
+      function openComment() {
+        const card = config.cards[state.cardIndex];
+        if (!card || state.flying) return;
+        state.commentOpenFor = card.id;
+        state.commentDraft = state.comments[card.id] || "";
+        render();
+        const input = app.querySelector("[data-comment-input]");
+        if (input) input.focus();
+      }
+
+      function saveComment(decision) {
+        const id = state.commentOpenFor;
+        if (!id) return;
+        const input = app.querySelector("[data-comment-input]");
+        const draft = input ? input.value.trim() : state.commentDraft.trim();
+        if (draft) state.comments[id] = draft;
+        state.commentOpenFor = null;
+        state.commentDraft = "";
+        render();
+        commitDecision(decision);
+      }
+
+      function sendChat(text) {
+        const value = text.trim();
+        if (!value || state.chatPending) return;
+        state.chatMessages.push({ from: "user", text: value });
+        state.chatPending = true;
+        render();
+        if (state.chatStep === "brief") {
+          window.setTimeout(() => {
+            state.chatMessages.push({ from: "agent", text: "Got it. What is your name and the best email for a follow-up?" });
+            state.chatStep = "contact";
+            state.chatPending = false;
+            render();
+          }, state.reducedMotion ? 1 : 650);
+        } else {
+          window.setTimeout(() => {
+            state.chatStep = "done";
+            state.chatPending = false;
+            state.stage = "done";
+            render();
+          }, state.reducedMotion ? 1 : 650);
+        }
+      }
+
+      function switchBrand() {
+        const next = brandKey === "tiktok" ? "huawei" : "tiktok";
+        window.location.href = `${window.location.pathname}?brand=${next}`;
+      }
+
+      function onClick(event) {
+        const target = event.target.closest("[data-action], [data-decision], [data-option], [data-detail]");
+        if (!target) return;
+        if (target.dataset.option) {
+          const question = config.questions[state.qIndex];
+          state.answers[question.id] = target.dataset.option;
+          render();
+          return;
+        }
+        if (target.dataset.decision) {
+          commitDecision(target.dataset.decision);
+          return;
+        }
+        if (target.dataset.detail) {
+          state.detailCardId = target.dataset.detail;
+          state.detailOpen = true;
+          render();
+          return;
+        }
+        const action = target.dataset.action;
+        if (action === "start") { state.stage = "onboarding"; render(); return; }
+        if (action === "reset") { reset(); return; }
+        if (action === "switch-brand") { switchBrand(); return; }
+        if (action === "back") {
+          if (state.qIndex > 0) state.qIndex -= 1;
+          else state.stage = "intro";
+          render();
+          return;
+        }
+        if (action === "next") {
+          if (!state.answers[config.questions[state.qIndex].id]) return;
+          if (state.qIndex < config.questions.length - 1) state.qIndex += 1;
+          else { state.stage = "feed"; state.cardIndex = 0; }
+          render();
+          return;
+        }
+        if (action === "open-comment") { openComment(); return; }
+        if (action === "cancel-comment") { state.commentOpenFor = null; state.commentDraft = ""; render(); return; }
+        if (action === "save-comment-like") { saveComment("like"); return; }
+        if (action === "save-comment-pass") { saveComment("nope"); return; }
+        if (action === "close-detail") { state.detailOpen = false; state.detailCardId = null; render(); return; }
+        if (action === "waitlist") { startWaitlist(); return; }
+        if (action === "back-to-feed") { state.stage = "feed"; state.cardIndex = 0; render(); return; }
+      }
+
+      function onInput(event) {
+        if (event.target.matches("[data-comment-input]")) state.commentDraft = event.target.value;
+      }
+
+      function onSubmit(event) {
+        const form = event.target.closest("[data-chat-form]");
+        if (!form) return;
+        event.preventDefault();
+        const input = form.querySelector("[name=message]");
+        if (input) sendChat(input.value);
+      }
+
+      function bindFeedPointer() {
+        const card = app.querySelector(".top-card");
+        if (!card || state.stage !== "feed") return;
+        let startX = 0;
+        let dragX = 0;
+        let active = false;
+        const update = () => {
+          const distance = Math.abs(dragX);
+          card.style.transform = `translateX(${dragX}px) rotate(${dragX * .045}deg)`;
+          card.classList.toggle("show-like", dragX > 45);
+          card.classList.toggle("show-nope", dragX < -45);
+          card.style.opacity = distance > 150 ? "0.72" : "1";
+        };
+        card.addEventListener("pointerdown", event => {
+          if (state.flying) return;
+          active = true;
+          startX = event.clientX;
+          dragX = 0;
+          card.setPointerCapture(event.pointerId);
+        });
+        card.addEventListener("pointermove", event => {
+          if (!active) return;
+          dragX = event.clientX - startX;
+          update();
+        });
+        const end = () => {
+          if (!active) return;
+          active = false;
+          if (Math.abs(dragX) > 100) commitDecision(dragX > 0 ? "like" : "nope");
+          else { card.style.transform = ""; card.style.opacity = "1"; card.classList.remove("show-like", "show-nope"); }
+        };
+        card.addEventListener("pointerup", end);
+        card.addEventListener("pointercancel", end);
+        card.addEventListener("click", event => {
+          if (Math.abs(dragX) > 10) return;
+          if (event.target.closest("button")) return;
+          state.detailCardId = card.dataset.cardId;
+          state.detailOpen = true;
+          render();
+        });
+      }
+
+      document.addEventListener("click", onClick);
+      document.addEventListener("input", onInput);
+      document.addEventListener("submit", onSubmit);
+      render();
+    }());
+  </script>
+</body>
+</html>
