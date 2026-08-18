@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <script src="./support.js"></script>
 </head>
 <body>
@@ -21,7 +21,7 @@ input::placeholder,textarea::placeholder{color:#5c5c52}
 .dc-phone{position:relative;width:min(390px,92vw);height:min(844px,90dvh);background:#0a0a08;border-radius:40px;overflow:hidden;box-shadow:0 40px 90px rgba(0,0,0,.55),0 0 0 1px rgba(255,255,255,.06)}
 @media (max-width:600px){
   .dc-shell{padding:0}
-  .dc-phone{width:100vw;height:100dvh;border-radius:0;box-shadow:none}
+  .dc-phone{width:100vw;height:100dvh;border-radius:0;box-shadow:none;box-sizing:border-box;padding-top:env(safe-area-inset-top);padding-bottom:env(safe-area-inset-bottom)}
 }
 </style>
 </helmet>
