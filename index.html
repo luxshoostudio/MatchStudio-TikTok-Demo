@@ -17,10 +17,16 @@ body{margin:0;background:#050503;}
 a{color:{{accent}};text-decoration:none}
 a:hover{color:#f5f5ee}
 input::placeholder,textarea::placeholder{color:#5c5c52}
+.dc-shell{min-height:100dvh;width:100%;display:flex;align-items:center;justify-content:center;background:radial-gradient(circle at 50% 0%,#141410 0%,#050503 65%);padding:24px;box-sizing:border-box;font-family:Geist,sans-serif}
+.dc-phone{position:relative;width:min(390px,92vw);height:min(844px,90dvh);background:#0a0a08;border-radius:40px;overflow:hidden;box-shadow:0 40px 90px rgba(0,0,0,.55),0 0 0 1px rgba(255,255,255,.06)}
+@media (max-width:600px){
+  .dc-shell{padding:0}
+  .dc-phone{width:100vw;height:100dvh;border-radius:0;box-shadow:none}
+}
 </style>
 </helmet>
-<div style="min-height:100dvh;width:100%;display:flex;align-items:center;justify-content:center;background:radial-gradient(circle at 50% 0%,#141410 0%,#050503 65%);padding:24px;box-sizing:border-box;font-family:Geist,sans-serif">
-<div style="position:relative;width:min(390px,92vw);height:min(844px,90dvh);background:#0a0a08;border-radius:40px;overflow:hidden;box-shadow:0 40px 90px rgba(0,0,0,.55),0 0 0 1px rgba(255,255,255,.06);">
+<div class="dc-shell">
+<div class="dc-phone">
 
 <sc-if value="{{isIntro}}" hint-placeholder-val="{{true}}">
 <div data-screen-label="Intro" style="position:absolute;inset:0;display:flex;flex-direction:column;justify-content:space-between;padding:52px 28px 36px;box-sizing:border-box">
@@ -487,7 +493,7 @@ class Component extends DCLogic {
       pageQuestions,
       progressPct: Math.round(((s.pageIndex + 1) / this.totalPages) * 100),
       qPosLabel: (s.pageIndex + 1) + ' / ' + this.totalPages,
-      nextDisabled: !hasAnswer,
+      nextDisabled: false,
       nextBg: hasAnswer ? accent : '#1c1c15', nextColor: hasAnswer ? '#0a0a08' : '#6b6b62',
       nextLabel: s.pageIndex < this.totalPages - 1 ? 'Next →' : "See what we'd build →",
       cardCounterLabel: (s.cardIndex + 1) + ' / ' + this.cards.length,
