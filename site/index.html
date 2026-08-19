@@ -380,6 +380,23 @@
       filter: saturate(.88) contrast(1.05);
     }
 
+    .proof-image-empty {
+      position: absolute;
+      inset: 0;
+      display: grid;
+      place-items: center;
+      padding: 30px;
+      color: rgba(245,245,239,.58);
+      background:
+        linear-gradient(135deg, rgba(var(--accent-rgb), .12), transparent 48%),
+        repeating-linear-gradient(135deg, rgba(255,255,255,.045) 0 1px, transparent 1px 12px),
+        #171914;
+      font-size: 11px;
+      letter-spacing: .14em;
+      text-align: center;
+      text-transform: uppercase;
+    }
+
     .proof-card::after {
       content: "";
       position: absolute;
@@ -550,6 +567,17 @@
     .detail-kicker { color: var(--accent); font-size: 10px; font-weight: 800; letter-spacing: .16em; text-transform: uppercase; }
     .detail-overlay h2 { margin: 0 0 14px; font-size: 34px; line-height: .97; letter-spacing: -.07em; }
     .detail-image { width: 100%; height: 190px; object-fit: cover; border-radius: 19px; opacity: .82; }
+    .detail-image-empty {
+      display: grid;
+      place-items: center;
+      color: var(--muted);
+      background:
+        repeating-linear-gradient(135deg, rgba(255,255,255,.045) 0 1px, transparent 1px 12px),
+        #171914;
+      font-size: 11px;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+    }
     .detail-pitch { margin: 18px 0; color: #d7d8d0; font-size: 15px; line-height: 1.5; }
     .detail-grid { display: grid; gap: 12px; margin-top: 18px; }
     .detail-block { padding-top: 12px; border-top: 1px solid var(--line); }
@@ -720,14 +748,17 @@
       function renderProofCard(card, position) {
         if (!card) return "";
         const next = position === "next";
-        return `<article class="proof-card ${next ? "next" : "top-card"}" data-card-id="${esc(card.id)}" aria-label="${esc(card.title)}"${next ? "" : " tabindex=\"0\""}>
-          <img class="proof-image" src="${esc(card.img)}" alt="">
+        const image = card.img
+          ? `<img class="proof-image" src="${esc(card.img)}" alt="">`
+          : `<div class="proof-image-empty" aria-hidden="true">No visual on file</div>`;
+        return `<article class="proof-card ${next ? "next" : "top-card"}" data-card-id="${esc(card.id)}" role="button" aria-label="${esc(card.title)}"${next ? "" : " tabindex=\"0\""}>
+          ${image}
           <span class="stamp like">LIKE</span><span class="stamp nope">NOPE</span>
           <div class="proof-copy">
             <div class="proof-label">${esc(card.label)} / ${esc(card.cn)}</div>
             <h2>${esc(card.title)}</h2>
             <p class="proof-pitch">${esc(card.pitch)}</p>
-            <div class="proof-meta"><span class="proof-case">${esc(card.caseTitle)}</span><span class="proof-stat">${esc(card.stat)}</span><button class="proof-detail-link" data-detail="${esc(card.id)}">View case details ↗</button></div>
+            <div class="proof-meta"><span class="proof-case">${esc(card.caseTitle)}</span><span class="proof-stat">${esc(card.stat)}</span><button class="proof-detail-link" data-detail="${esc(card.id)}" data-no-drag>View case details ↗</button></div>
           </div>
         </article>`;
       }
@@ -806,7 +837,10 @@
         if (!state.detailOpen) return "";
         const card = config.cards.find(item => item.id === state.detailCardId);
         if (!card) return "";
-        return `<div class="detail-overlay"><div class="detail-close"><span class="detail-kicker">Case detail</span><button data-action="close-detail" aria-label="Close">×</button></div><h2>${esc(card.title)}</h2><img class="detail-image" src="${esc(card.img)}" alt=""><p class="detail-pitch">${esc(card.pitch)}</p><div class="detail-grid"><div class="detail-block"><strong>Proof shown</strong><span>${esc(card.caseTitle)} · ${esc(card.stat)}</span></div><div class="detail-block"><strong>Capability owner</strong><span>${esc(card.owner)}</span></div><div class="detail-block"><strong>Evidence note</strong><span>${esc(card.source)}</span></div></div></div>`;
+        const image = card.img
+          ? `<img class="detail-image" src="${esc(card.img)}" alt="">`
+          : `<div class="detail-image detail-image-empty" aria-label="No visual on file">No visual on file</div>`;
+        return `<div class="detail-overlay"><div class="detail-close"><span class="detail-kicker">Case detail</span><button data-action="close-detail" aria-label="Close">×</button></div><h2>${esc(card.title)}</h2>${image}<p class="detail-pitch">${esc(card.pitch)}</p><div class="detail-grid"><div class="detail-block"><strong>Proof shown</strong><span>${esc(card.caseTitle)} · ${esc(card.stat)}</span></div><div class="detail-block"><strong>Capability owner</strong><span>${esc(card.owner)}</span></div><div class="detail-block"><strong>Evidence note</strong><span>${esc(card.source)}</span></div></div></div>`;
       }
 
       function render() {
@@ -982,11 +1016,11 @@
           card.style.opacity = distance > 150 ? "0.72" : "1";
         };
         card.addEventListener("pointerdown", event => {
-          if (state.flying) return;
+          if (state.flying || event.target.closest("[data-no-drag]")) return;
           active = true;
           startX = event.clientX;
           dragX = 0;
-          card.setPointerCapture(event.pointerId);
+          card.setPointerCapture?.(event.pointerId);
         });
         card.addEventListener("pointermove", event => {
           if (!active) return;
@@ -1001,12 +1035,27 @@
         };
         card.addEventListener("pointerup", end);
         card.addEventListener("pointercancel", end);
+        card.addEventListener("lostpointercapture", end);
         card.addEventListener("click", event => {
           if (Math.abs(dragX) > 10) return;
           if (event.target.closest("button")) return;
           state.detailCardId = card.dataset.cardId;
           state.detailOpen = true;
           render();
+        });
+        card.addEventListener("keydown", event => {
+          if (event.target.closest("button")) return;
+          if (event.key === "ArrowLeft" || event.key === "ArrowRight") {
+            event.preventDefault();
+            commitDecision(event.key === "ArrowRight" ? "like" : "nope");
+            return;
+          }
+          if (event.key === "Enter" || event.key === " ") {
+            event.preventDefault();
+            state.detailCardId = card.dataset.cardId;
+            state.detailOpen = true;
+            render();
+          }
         });
       }
 
